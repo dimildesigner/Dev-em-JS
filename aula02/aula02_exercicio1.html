@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Produtos</title>
+</head>
+
+<body style="background-color: rgb(175, 255, 244);;">
+    <h1>Formulário de Produtos</h1> <br>
+
+    <h2 style="color:rgb(7, 151, 79);">PRODUTOS</h2> <br>
+    <form>
+        <label for="">Nome do Produto:</label>
+        <input type="text" placeholder="digite o nome do produto"> <br><br>
+
+        <label for="">Preço:</label>
+        <input type="number" placeholder="digite o valor"> <br><br>
+
+        <label for="">Quantidade:</label>
+        <input type="number" placeholder="digite a quantidade"> <br><br>
+
+        <br>
+        <button type="submit" style="color:rgb(64, 47, 223); border-radius: 5px; background-color: #fff492;">Adicionar</button><br><br>
+    </form>
+
+    <hr> <br><br>
+
+    <h2 style="color:rgb(7, 151, 79);">LISTA DE PRODUTOS CADASTRADOS</h2> <br>
+    <h3 style="color:rgb(64, 47, 223);">Livros Infantis</h3>
+    
+    <table border="2" style="padding: 5px; margin: 5px; border-color: rgb(16, 97, 204); background-color: #fff492; border-radius: 10px;" cellpadding="10px" cellspacing="6px">
+        <thead style="background-color:rgb(38, 193, 255); color: rgb(255, 255, 255);">
+            <tr>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Total (Preço × Quantidade)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Onde Está a Bluey?</td>
+                <td>R$ 17,00</td>
+                <td>2</td>
+                <td style="background-color:rgb(137, 255, 196); color: rgb(22, 13, 107);" align="center">R$ 34,00</td>
+            </tr>
+            <tr>
+                <td>O Pequeno Príncipe</td>
+                <td>R$ 18,00</td>
+                <td>5</td>
+                <td style="background-color:rgb(137, 255, 196); color: rgb(22, 13, 107);" align="center">R$ 90,00</td>
+            </tr>
+            <tr>
+                <td>Escreva e Apague</td>
+                <td>R$ 22,00</td>
+                <td>10</td>
+                <td style="background-color:rgb(137, 255, 196); color: rgb(22, 13, 107);" align="center">R$ 220,00</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+
+</body>
+
+</html>
+
+
+<!-- 
+Rquisitos:
+Formulário para adicionar produtos:
+
+Nome do Produto (texto)
+
+Preço (número)
+
+Quantidade (número)
+
+Botão "Adicionar" (simulado, sem funcionalidade JS).
+
+Tabela que lista os produtos:
+
+Colunas: Nome, Preço, Quantidade, Total (Preço × Quantidade).
+
+Pelo menos 3 produtos pré-cadastrados. 
+-->
