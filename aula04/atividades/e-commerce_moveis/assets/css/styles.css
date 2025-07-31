@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Butterfly+Kids&display=swap');
+
+/* 
+.butterfly-kids-regular {
+    font-family: "Butterfly Kids", cursive;
+    font-weight: 400;
+    font-style: normal;
+} 
+*/
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(255, 244, 194);
+}
+
+header {
+    background-color: #f39325;
+    color: rgb(242, 255, 56);
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-family: "Butterfly Kids", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 80px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    color: #ffd78d;
+    gap: 30px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+.produtos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.produto {
+    background-color: #ffffff;
+    border: 10px solid #ffd903;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 20px;
+    width: 300px;
+}
+
+.produto img {
+    width: 100%;
+    height: auto;
+}
+
+.produto span {
+    margin-bottom: 20px;
+}
+
+button a {
+    margin: 20px 10px 20px 10px;
+    padding: 2px 20px;
+    text-decoration: none;
+    color: white;
+}
+
+span {
+    font-size: 25px;
+    color: #e48416;
+}
+
+.b1 {
+    background: #e48416;
+    margin: 30px;
+    padding: 10px;
+    border: none;
+    border-radius: 310px;
+}
+
+.b2 {
+    background: #e48416;
+    margin: 30px;
+    padding: 10px;
+    border: none;
+    border-radius: 310px;
+}
+
+.b3 {
+    background: #e48416;
+    margin: 30px;
+    padding: 10px;
+    border: none;
+    border-radius: 310px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #ffd903;
+    color: rgb(119, 119, 119);
+}
