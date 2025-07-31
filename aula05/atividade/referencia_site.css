@@ -1,0 +1,23 @@
+
+:root {
+    /* CSS HEX */
+--tropical-indigo: #9381ffff;
+--periwinkle: #b8b8ffff;
+--ghost-white: #f8f7ffff;
+--antique-white: #ffeeddff;
+--apricot: #ffd8beff;
+
+/* CSS HSL */
+--tropical-indigo: hsla(249, 100%, 75%, 1);
+--periwinkle: hsla(240, 100%, 86%, 1);
+--ghost-white: hsla(248, 100%, 98%, 1);
+--antique-white: hsla(30, 100%, 93%, 1);
+--apricot: hsla(24, 100%, 87%, 1);
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
