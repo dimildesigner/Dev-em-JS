@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo do Par ou Ímpar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input,
+        button {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        #mensagem {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <!--Título do Jogo -->
+    <h1>Jogo do Par ou Ímpar</h1>
+    <!--Instruções para o Jogador -->
+    <p>Escolha um número entre <strong>1 e 10</strong> e selecione se quer <strong>Par</strong> ou
+        <strong>Ímpar</strong> .</p> <br>
+    <p>O computador também sorteiará um número aleatório entre 1 e 10. O programa somará seu número com o dele e
+        verificará se é Par ou Ímpar. Por fim, o resultado, se você acertou ou errou</p>
+
+    <!-- Campo para digitar o palpite-->
+    <input type="number" id="palpite" min="1" max="100" placeholder="Número"> <br>
+
+    <p>Par ou Ímpar?</p> 
+    <!-- Campo para digitar o par ou impar --> 
+    <input type="radio" id="par" name="fav_language" value="PAR">
+    <label for="par">PAR</label>
+    <input type="radio" id="impar" name="fav_language" value="ÍMPAR">
+    <label for="impar">ÍMPAR</label><br>
+
+
+    <!-- Botão para verificar o palpite-->
+    <button onclick="verificarPalpite()">Verificar</button>
+
+    <!--Mensagem com o resultado da tentativa -->
+    <div id="mensagem"></div>
+    <button onclick="reiniciarJogo()">Jogar novamente</button>
+
+    <script>
+        //Gerar um número aletório entre 1 e 10
+        let numeroSecreto = Math.floor(Math.random() * 10) + 1;
+
+        //Função chamada ao clicar no botão "Verificar"
+        function verificarPalpite() {
+            const entrada = document.getElementById('palpite');
+            const mensagem = document.getElementById('mensagem');
+            const palpite = Number(entrada.value); // Converte para número
+            const par = document.getElementById('par');
+            const impar = document.getElementById('impar');
+
+            //Verificar se o valor está dentro do intervalo válido
+            if (palpite < 1 || palpite > 10) {
+                mensagem.textContent = "Por favor, digite um número entre 1 e 10.";
+            }
+
+            //Verificar se o valor par ou ímpar está selecionado
+            if (par || impar === value = false) {
+                mensagem.textContent = "Por favor, escolha PAR ou ÍMPAR.";
+            }
+
+            //Compara o palpite com o número secreto
+            if (palpite === numeroSecreto) {
+                mensagem.textContent = `Parabéns! Você acertou o número ${numeroSecreto} .`;
+                mensagem.style.color = "green";
+                desabilitarEntrada();
+            } else if (tentativasRestantes === 0) {
+                mensagem.textContent = `Fim de Jogo! O número era ${numeroSecreto} .`;
+                mensagem.style.color = "red";
+                desabilitarEntrada();
+            } else if (palpite < numeroSecreto) {
+                mensagem.textContent = `Errou! O número é **MAIOR** que ${palpite}. Tentativas restantes: ${tentativasRestantes} .`;
+                mensagem.style.color = "orange";
+            } else {
+                mensagem.textContent = `Errou! O número é **Menor** que ${palpite}. Tentativas restantes: ${tentativasRestantes} .`;
+                mensagem.style.color = "orange";
+            }
+
+            //Limpa o campo e foca novamente
+            entrada.value = "";
+            entrada.focus();
+
+            //Função para desativar o campo de entrada e botão
+            function desabilitarEntrada() {
+                document.getElementById('palpite').disable = true;
+            }
+        }
+
+
+
+    </script>
+</body>
+
+</html>
+
+
+<!-- 
+        //Etapas do jogo
+        // 1. Crie um jogo chamado "Par ou Ímpar"
+        // 2. O usuário escolhe um número entre 1 e 10 e seleciona se quer "Par" ou "Ímpar".
+        // 3. O computador também sorteiará um número aleatório entre 1 e 10.
+        // 4. O programa soma os dois números e diz se o resultado é par ou ímpar, e se o usuário ganhou ou perdeu.
+
+        // Regras geral: 
+        // Use campos simples como:
+        // • Campo para digitar um número.
+        // • Botões para escolher Par ou Ímpar.
+        // • Um botão para jogar.
+        // • Uma mensagem dizendo se o jogador ganhou ou perdeu.  
+        -->

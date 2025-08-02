@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo da Adivinhação</title>
+    <style>
+        /*Estilização básica do corpo da página*/
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input,
+        button {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        #mensagem {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <!--Título principal do Jogo -->
+    <h1>Jogo de Adivinhação</h1>
+    <!--Instruções para o Jogador -->
+    <p>Estou pensando em um número entre <strong>1 e 100</strong>. Tente adivinhar qual é esse número?</p>
+    <!-- Campo para digitar o palpite-->
+    <input type="number" id="palpite" min="1" max="100" placeholder="Digite seu número">
+    <!-- Botão para verificar o palpite-->
+    <button onclick="verificarPalpite()">Verificar</button>
+    <!--Mensagem com o resultado da tentativa -->
+    <div id="mensagem"></div>
+    <button onclick="reiniciarJogo()">Jogar novamente</button>
+    <script>
+        //Gerar um número aletório entre 1 e 100
+        let numeroSecreto = Math.floor(Math.random() * 100) + 1;
+
+        //Limite de tentativas que o jogador tem
+        let tentativasRestantes = 10;
+
+        //Função chamada ao clicar no botão "Verificar"
+        function verificarPalpite() {
+            const entrada = document.getElementById('palpite');
+            const mensagem = document.getElementById('mensagem');
+            const palpite = Number(entrada.value); // Converte para número
+
+            //Verificar se o valor está dentro do intervalo válido
+            if (palpite < 1 || palpite > 100) {
+                mensagem.textContent = "Por favor, digite um número entre 1 e 100.";
+            }
+            //Dimunui o número de tentativas restantes
+            tentativasRestantes--;
+
+            //Compara o palpite com o número secreto
+            if (palpite === numeroSecreto) {
+                mensagem.textContent = `Parabéns! Você acertou o número ${numeroSecreto} .`;
+                mensagem.style.color = "green";
+                desabilitarEntrada();
+            } else if (tentativasRestantes === 0) {
+                mensagem.textContent = `Fim de Jogo! O número era ${numeroSecreto} .`;
+                mensagem.style.color = "red";
+                desabilitarEntrada();
+            } else if (palpite < numeroSecreto) {
+                mensagem.textContent = `Errou! O número é **MAIOR** que ${palpite}. Tentativas restantes: ${tentativasRestantes} .`;
+                mensagem.style.color = "orange";
+            } else {
+                mensagem.textContent = `Errou! O número é **Menor** que ${palpite}. Tentativas restantes: ${tentativasRestantes} .`;
+                mensagem.style.color = "orange";
+            }
+
+            //Limpa o campo e foca novamente
+            entrada.value = "";
+            entrada.focus();
+
+            //Função para desativar o campo de entrada e botão
+            function desabilitarEntrada() {
+                document.getElementById('palpite').disable = true;
+            }
+        }
+
+        //Reiniciar o jogo gerando novo número e resetando tentativas
+        function reiniciarJogo() {
+            numeroSecreto = Math.floor(Math.random() * 100) + 1;
+            tentativasRestantes = 10;
+            const mensagem = document.getElementById('mensagem');
+            const entrada = document.getElementById('palpite');
+            entrada.disable = false;
+            entrada.value = "";
+            entrada.focus();
+            mensagem.textContent = "";
+
+        }
+    </script>
+</body>
+
+</html>

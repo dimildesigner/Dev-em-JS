@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo - Adivinhe a Cor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .game-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 200px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .scoreboard {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    /* Estilo para os fogos de artifício */
+    .firework {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      opacity: 0;
+      animation: firework 1.5s ease-out forwards;
+    }
+
+    @keyframes firework {
+      0% {
+        width: 10px;
+        height: 10px;
+        opacity: 1;
+      }
+      100% {
+        width: 100px;
+        height: 100px;
+        opacity: 0;
+        transform: translateY(-300px) scale(5);
+      }
+    }
+
+    /* Partículas do fogo de artifício */
+    .particle {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      animation: particle 1s linear forwards;
+    }
+
+    @keyframes particle {
+      0% {
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Jogo - Adivinhe a Cor</h1>
+
+  <div class="game-container">
+    <label for="colorInput">Tente adivinhar a cor (vermelho, azul, verde, amarelo, roxo):</label><br />
+    <input type="text" id="colorInput" placeholder="Digite a cor aqui" /><br /><br />
+    <button onclick="playGame()">Jogar</button>
+    <button onclick="resetGame()">Reiniciar</button>
+
+    <div class="result" id="result"></div>
+    <div class="scoreboard">
+      Acertos: <span id="wins">0</span> |
+      Erros: <span id="losses">0</span>
+    </div>
+  </div>
+
+  <div id="fireworksContainer"></div>
+
+  <script>
+    const cores = ["vermelho", "azul", "verde", "amarelo", "roxo"];
+    let wins = 0;
+    let losses = 0;
+    let corSecreta = cores[Math.floor(Math.random() * cores.length)];
+
+    // Função para jogar
+    function playGame() {
+      const userColor = document.getElementById("colorInput").value.trim().toLowerCase();
+
+      if (!cores.includes(userColor)) {
+        alert("Digite uma cor válida!");
+        return;
+      }
+
+      const resultDiv = document.getElementById("result");
+
+      if (userColor === corSecreta) {
+        wins++;
+        resultDiv.innerHTML = `<span style="color:green;">Parabéns! Você acertou a cor!</span>`;
+        document.getElementById("wins").textContent = wins;
+        startFireworksEffect();
+      } else {
+        losses++;
+        resultDiv.innerHTML = `<span style="color:red;">Errou! A cor era ${corSecreta}.</span>`;
+        document.getElementById("losses").textContent = losses;
+      }
+
+      // Atualiza a cor secreta para a próxima rodada
+      corSecreta = cores[Math.floor(Math.random() * cores.length)];
+    }
+
+    // Função para reiniciar o jogo
+    function resetGame() {
+      wins = 0;
+      losses = 0;
+      corSecreta = cores[Math.floor(Math.random() * cores.length)];
+      document.getElementById("colorInput").value = "";
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("wins").textContent = "0";
+      document.getElementById("losses").textContent = "0";
+      stopFireworksEffect();
+    }
+
+    // Função para iniciar os fogos de artifício
+    function startFireworksEffect() {
+      const container = document.getElementById("fireworksContainer");
+
+      // Cria o fogo principal
+      const firework = document.createElement("div");
+      firework.classList.add("firework");
+      container.appendChild(firework);
+
+      // Gera partículas para o fogo de artifício
+      for (let i = 0; i < 50; i++) {
+        createParticle(firework);
+      }
+
+      // Remove o fogo de artifício após a animação
+      setTimeout(() => {
+        container.removeChild(firework);
+      }, 1500);
+    }
+
+    // Função para criar as partículas do fogo de artifício
+    function createParticle(firework) {
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
+
+      // Definindo posição e movimento da partícula
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = Math.random() * 150 + 50; // Distância das partículas
+      const x = Math.cos(angle) * distance;
+      const y = Math.sin(angle) * distance;
+
+      particle.style.width = `${Math.random() * 6 + 4}px`;
+      particle.style.height = particle.style.width;
+      particle.style.left = `${firework.offsetLeft + firework.offsetWidth / 2 - 3}px`;
+      particle.style.top = `${firework.offsetTop + firework.offsetHeight / 2 - 3}px`;
+      particle.style.setProperty('--x', `${x}px`);
+      particle.style.setProperty('--y', `${y}px`);
+      particle.style.backgroundColor = randomColor(); // Cor aleatória para as partículas
+
+      firework.appendChild(particle);
+    }
+
+    // Função para gerar uma cor aleatória para as partículas
+    function randomColor() {
+      const colors = [
+        "#ff0000", // vermelho
+        "#00ff00", // verde
+        "#0000ff", // azul
+        "#ffff00", // amarelo
+        "#ff00ff", // roxo
+        "#ff6600", // laranja
+        "#00ffff", // ciano
+        "#ff99ff"  // rosa
+      ];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // Função para parar os fogos de artifício
+    function stopFireworksEffect() {
+      const container = document.getElementById("fireworksContainer");
+      while (container.firstChild) {
+        container.removeChild(container.firstChild);
+      }
+    }
+  </script>
+
+</body>
+</html>

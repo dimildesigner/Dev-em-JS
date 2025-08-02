@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jogo Par ou Ímpar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .game-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+
+    input[type="number"] {
+      padding: 10px;
+      width: 60px;
+      font-size: 16px;
+    }
+
+    .choice-buttons button, .restart-button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .scoreboard {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    .confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      overflow: visible;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: fall 6s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    .animated-number {
+      display: inline-block;
+      font-size: 24px;
+      animation: bounce 0.5s ease;
+    }
+
+    @keyframes bounce {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Jogo Par ou Ímpar</h1>
+
+  <div class="game-container">
+    <label for="userNumber">Digite um número (1 a 10):</label><br />
+    <input type="number" id="userNumber" min="1" max="10" /><br /><br />
+
+    <div class="choice-buttons">
+      <button onclick="setChoice('par')">Par</button>
+      <button onclick="setChoice('impar')">Ímpar</button>
+    </div>
+
+    <button onclick="playGame()">Jogar</button>
+    <button class="restart-button" onclick="resetGame()">Reiniciar</button>
+
+    <div class="result" id="result"></div>
+
+    <div class="scoreboard">
+      Vitórias: <span id="wins">0</span> |
+      Derrotas: <span id="losses">0</span>
+    </div>
+  </div>
+
+  <div class="confetti" id="confettiContainer"></div>
+
+  <!-- Sons -->
+  <audio id="winSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
+  <audio id="loseSound" src="https://actions.google.com/sounds/v1/cartoon/boing.ogg" preload="auto"></audio>
+
+  <script>
+    let userChoice = "";
+    let wins = 0;
+    let losses = 0;
+    let confettiInterval = null;
+
+    // Define a escolha do jogador (par ou ímpar)
+    function setChoice(choice) {
+      userChoice = choice;
+    }
+
+    // Função para jogar uma rodada
+    function playGame() {
+      const userNumber = parseInt(document.getElementById("userNumber").value);
+
+      if (!userNumber || userNumber < 1 || userNumber > 10) {
+        alert("Digite um número entre 1 e 10.");
+        return;
+      }
+
+      if (userChoice === "") {
+        alert("Escolha Par ou Ímpar.");
+        return;
+      }
+
+      stopConfetti(); // Para chuva contínua de confetes anterior, se houver
+
+      const computerNumber = Math.floor(Math.random() * 10) + 1;
+      const total = userNumber + computerNumber;
+      const resultType = total % 2 === 0 ? "par" : "impar";
+
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = `
+        Você escolheu <strong>${userNumber}</strong> e <strong>${userChoice.toUpperCase()}</strong><br />
+        O computador escolheu <span class="animated-number">${computerNumber}</span><br />
+        A soma é <strong>${total}</strong> (<strong>${resultType.toUpperCase()}</strong>)<br />
+      `;
+
+      if (userChoice === resultType) {
+        wins++;
+        resultDiv.innerHTML +=
+          "<br /><span style='color:green;'>Parabéns! Você venceu! 🎉</span>";
+        document.getElementById("winSound").play();
+        startConfettiEffect();
+      } else {
+        losses++;
+        resultDiv.innerHTML +=
+          "<br /><span style='color:red;'>Você perdeu. Tente novamente!</span>";
+        document.getElementById("loseSound").play();
+      }
+
+      document.getElementById("wins").textContent = wins;
+      document.getElementById("losses").textContent = losses;
+    }
+
+    // Função para reiniciar o jogo e zerar contadores
+    function resetGame() {
+      userChoice = "";
+      wins = 0;
+      losses = 0;
+      document.getElementById("userNumber").value = "";
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("wins").textContent = "0";
+      document.getElementById("losses").textContent = "0";
+      stopConfetti();
+    }
+
+    // Inicia o efeito de confetes: explosão + queda contínua suave
+    function startConfettiEffect() {
+      explosionConfetti(40); // Explosão inicial
+      setTimeout(() => {
+        confettiInterval = setInterval(() => {
+          fallingConfetti(3); // Chuva suave e constante
+        }, 300);
+      }, 400); // Pequeno atraso após explosão
+    }
+
+    // Explosão inicial: muitos confetes de uma vez
+    function explosionConfetti(quantity) {
+      const container = document.getElementById("confettiContainer");
+      for (let i = 0; i < quantity; i++) {
+        const confetti = createConfetti();
+        confetti.style.animationDuration = (Math.random() * 2 + 3) + "s";
+        container.appendChild(confetti);
+      }
+    }
+
+    // Chuva suave contínua: poucos confetes por vez
+    function fallingConfetti(quantity) {
+      const container = document.getElementById("confettiContainer");
+      for (let i = 0; i < quantity; i++) {
+        const confetti = createConfetti();
+        confetti.style.animationDuration = (Math.random() * 3 + 4) + "s";
+        container.appendChild(confetti);
+      }
+    }
+
+    // Cria uma peça de confete com propriedades aleatórias
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti-piece");
+
+      const colors = [
+        "#f94144",
+        "#f3722c",
+        "#f9c74f",
+        "#90be6d",
+        "#43aa8b",
+        "#577590",
+      ];
+      confetti.style.backgroundColor =
+        colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.left = Math.random() * 100 + "vw";
+      const size = Math.random() * 6 + 8;
+      confetti.style.width = size + "px";
+      confetti.style.height = size + "px";
+      confetti.style.opacity = Math.random() * 0.5 + 0.5;
+
+      // Remove o confete após o fim da animação (para não poluir o DOM)
+      confetti.addEventListener("animationend", () => confetti.remove());
+
+      return confetti;
+    }
+
+    // Para a chuva contínua de confetes gradualmente ao jogar novamente
+    function stopConfetti() {
+      if (confettiInterval) {
+        clearInterval(confettiInterval);
+        confettiInterval = null;
+      }
+      // Não removemos confetes atuais, eles cairão e serão removidos na animação end
+    }
+  </script>
+</body>
+</html>
