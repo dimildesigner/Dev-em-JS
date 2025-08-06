@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor de Mensagem</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    textarea {
+      width: 80%;
+      height: 100px;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      resize: none;
+    }
+
+    .botoes {
+      margin-bottom: 20px;
+    }
+
+    .botoes button, .botoes select {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    #mensagemExibida {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 10px;
+      min-height: 50px;
+      font-size: 20px;
+      font-weight: bold;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    /* Cores da mensagem */
+    .cor-vermelha {
+      color: red;
+    }
+
+    .cor-verde {
+      color: green;
+    }
+
+    .cor-azul {
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+  <h1>Editor de Mensagem</h1>
+
+  <textarea id="mensagem" placeholder="Digite sua mensagem aqui..."></textarea>
+
+  <div class="botoes">
+    <select id="seletorCor">
+      <option value="cor-vermelha">Vermelho</option>
+      <option value="cor-verde">Verde</option>
+      <option value="cor-azul">Azul</option>
+    </select>
+
+    <button onclick="exibirMensagem()">Exibir Mensagem</button>
+    <button onclick="limparMensagem()">Limpar</button>
+  </div>
+
+  <div id="mensagemExibida"></div>
+
+  <script>
+    function exibirMensagem() {
+      const mensagem = document.getElementById('mensagem').value;
+      const corSelecionada = document.getElementById('seletorCor').value;
+      const areaMensagem = document.getElementById('mensagemExibida');
+
+      areaMensagem.textContent = mensagem;
+
+      // Remove cores anteriores
+      areaMensagem.className = '';
+      areaMensagem.classList.add(corSelecionada);
+    }
+
+    function limparMensagem() {
+      document.getElementById('mensagem').value = '';
+      const areaMensagem = document.getElementById('mensagemExibida');
+      areaMensagem.textContent = '';
+      areaMensagem.className = '';
+    }
+  </script>
+</body>
+</html>

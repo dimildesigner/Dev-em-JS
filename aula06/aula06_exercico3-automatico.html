@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Semáforo Automático</title>
+    <style>
+        body {
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .semaforo {
+            background-color: #111;
+            padding: 20px;
+            border-radius: 10px;
+            width: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .luz {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background-color: #444;
+            transition: background-color 0.5s;
+        }
+
+        .luz.ativa.vermelha {
+            background-color: red;
+        }
+
+        .luz.ativa.amarela {
+            background-color: yellow;
+        }
+
+        .luz.ativa.verde {
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="semaforo">
+        <div class="luz vermelha"></div>
+        <div class="luz amarela"></div>
+        <div class="luz verde"></div>
+    </div>
+    <script>
+        const luzes = {
+            vermelha: document.querySelector('.luz.vermelha'),
+            amarela: document.querySelector('.luz.amarela'),
+            verde: document.querySelector('.luz.verde'),
+        };
+
+        let estado = 0;
+
+        function mudarLuz() {
+            // Resetando todas as luzes
+            Object.values(luzes).forEach(luz => luz.classList.remove('ativa'));
+
+            // Ciclo: 0 - Vermelha | 1 - Verde | 2 - Amarela
+            switch (estado) {
+                case 0:
+                    luzes.vermelha.classList.add('ativa');
+                    setTimeout(mudarLuz, 3000); // 3s no vermelho
+                    estado = 1;
+                    break;
+                case 1:
+                    luzes.verde.classList.add('ativa');
+                    setTimeout(mudarLuz, 3000); // 3s no verde
+                    estado = 2;
+                    break;
+                case 2:
+                    luzes.amarela.classList.add('ativa');
+                    setTimeout(mudarLuz, 1000); // 1s no amarelo
+                    estado = 0;
+                    break;
+            }
+        }
+
+        // Iniciar o ciclo
+        mudarLuz();
+
+    </script>
+</body>
+
+</html>
