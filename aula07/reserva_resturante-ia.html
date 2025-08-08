@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Reservas de Restaurante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        .cliente-form {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .cliente-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .cliente-form input[type="text"], 
+        .cliente-form input[type="number"], 
+        .cliente-form select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .cliente-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .cliente-form button:hover {
+            background-color: #218838;
+        }
+        #resultado {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+        }
+        #resultado p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+        #resultado .cliente-info {
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        #resultado .cliente-info:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Sistema de Reservas de Restaurante</h1>
+        
+        <h2>Cadastro de Clientes</h2>
+        
+        <div class="cliente-form">
+            <label for="nome1">Nome do Cliente 1:</label>
+            <input type="text" id="nome1" placeholder="Ex: João Silva">
+            
+            <label for="pessoas1">Número de Pessoas (1 a 8):</label>
+            <input type="number" id="pessoas1" min="1" max="8">
+            
+            <label for="mesa1">Tipo de Mesa:</label>
+            <select id="mesa1">
+                <option value="padrao">Padrão (4 pessoas - R$ 50/pessoa)</option>
+                <option value="vip">VIP (6 pessoas - R$ 80/pessoa)</option>
+                <option value="varanda">Varanda (8 pessoas - R$ 100/pessoa)</option>
+            </select>
+        </div>
+
+        <div class="cliente-form">
+            <label for="nome2">Nome do Cliente 2:</label>
+            <input type="text" id="nome2" placeholder="Ex: Maria Souza">
+            
+            <label for="pessoas2">Número de Pessoas (1 a 8):</label>
+            <input type="number" id="pessoas2" min="1" max="8">
+            
+            <label for="mesa2">Tipo de Mesa:</label>
+            <select id="mesa2">
+                <option value="padrao">Padrão (4 pessoas - R$ 50/pessoa)</option>
+                <option value="vip">VIP (6 pessoas - R$ 80/pessoa)</option>
+                <option value="varanda">Varanda (8 pessoas - R$ 100/pessoa)</option>
+            </select>
+        </div>
+
+        <div class="cliente-form">
+            <label for="nome3">Nome do Cliente 3:</label>
+            <input type="text" id="nome3" placeholder="Ex: Pedro Santos">
+            
+            <label for="pessoas3">Número de Pessoas (1 a 8):</label>
+            <input type="number" id="pessoas3" min="1" max="8">
+            
+            <label for="mesa3">Tipo de Mesa:</label>
+            <select id="mesa3">
+                <option value="padrao">Padrão (4 pessoas - R$ 50/pessoa)</option>
+                <option value="vip">VIP (6 pessoas - R$ 80/pessoa)</option>
+                <option value="varanda">Varanda (8 pessoas - R$ 100/pessoa)</option>
+            </select>
+        </div>
+
+        <button onclick="calcularReservas()">Calcular Reservas</button>
+
+        <div id="resultado">
+            <h2>Resultados</h2>
+            <p id="totalConsumoRestaurante"></p>
+        </div>
+
+    </div>
+    <script src="reserva_resturante.html"></script>
+</body>
+</html>
